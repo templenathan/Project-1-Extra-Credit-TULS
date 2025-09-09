@@ -14,8 +14,17 @@ int main(int argc, char *argv[]){
     struct dirent * dp;
     DIR * dir = opendir(directory);
 
+    if(dir == NULL){
+        perror("tuls: cannot open directory");
+        exit(1);
+    }
+
     while(dir){
         dp = readdir(dir);
+        if(dp == NULL){
+            closedir(dir);
+            return 0;
+        }
         printf("%s\n", dp->d_name);
     }
 
